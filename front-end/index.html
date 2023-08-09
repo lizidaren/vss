@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VSS</title>
+    <!-- 引入 layui.css -->
+    <link href="/layui/css/layui.css" rel="stylesheet">
+    <!-- 引入 layui.js -->
+    <script src="/layui/layui.js"></script>
+    
+    <script src="/func.js"></script>
+    <script>
+        function goto_init(){
+            window.location.href = "/init.html";
+        }
+        function goto_stream(){
+            window.location.href = "/stream.html";
+        }
+        window.onload = function(){
+            let u=navigator.userAgent;
+            if(u.indexOf('Android') > -1){
+                document.location.href = "/index_m.html";
+            }
+        }
+    </script>
+    <style>
+        .container {
+            padding-top: 10%;
+        }
+        h1 {
+            font-size: 8vh;
+        }
+        br {
+            display: block;
+            margin: 100px 0;
+        }
+        .layui-btn {
+            font-size: 6vh;
+            width: 30vw;
+            height: 11vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" align=center>
+        <h1>视觉搜索系统 VSS</h1>
+        <br><br><br><br><br><br><br><br><br><br>
+        <button type="button" class="layui-btn" onclick="goto_init();">初始化系统</button>
+        <br><br><br><br><br><br><br><br>
+        <button type="button" class="layui-btn" onclick="goto_stream();">打开实时视频</button>
+    </div>
+</body>
+</html>

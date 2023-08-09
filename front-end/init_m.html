@@ -1,0 +1,101 @@
+<!-- 初始化系统 -->
+<html>
+    <meta charset="utf-8">
+    <!-- 引入 layui.css -->
+    <link href="/layui/css/layui.css" rel="stylesheet">
+    <!-- 引入 layui.js -->
+    <script src="/layui/layui.js"></script>
+    
+    <script src="/func.js"></script>
+    
+    <title>Init VSS</title>
+    
+    <script>
+    window.onload = function(){
+        var layer = layui.layer;
+        if (queryHTTP(BACK_END + "/init/query") == "no"){
+            // 系统没初始化
+            
+        }
+        else{
+            layer.msg("系统已经初始化过了，重新提交会覆盖数据");
+        }
+    }
+    
+    function submit_init(){
+        let res = queryHTTP(BACK_END + "/init/set?prompt="+document.getElementById("prompt").value);
+        var layer = layui.layer;
+        if (res == "OK"){
+            layer.msg("已经提交！");
+        }else{
+            layer.msg("提交失败："+res);
+        }
+    }
+    
+    layui.use(function(){
+      var upload = layui.upload;
+      var $ = layui.$;
+      // 渲染
+      upload.render({
+        elem: '#ID-upload-demo-drag',
+        url: BACK_END + '/init/upload_img', 
+        done: function(res){
+          layer.msg('上传成功');
+          $('#ID-upload-demo-preview').removeClass('layui-hide')
+          .find('img').attr('src', res.files.file);
+          console.log(res)
+        }
+      });
+    });
+    </script>
+    <style>
+        body {
+            align-content: center;
+        }
+        #body-div {
+            width: 50%;
+        }
+        p {
+            font-size: 36px;
+            margin-top: 100px;
+        }
+        h1 {
+            font-size: 55px;
+            margin: 20px;
+        }
+        .layui-btn {
+            font-size: 48px;
+            width: 50vw;
+            height: 96px;
+            margin-top: 100px;
+        }
+        .layui-input {
+            margin: 30px;
+            font-size: 24px;
+        }
+    </style>
+    <body><center>
+        <div id="body-div" align=center>
+            <h1>初始化VSS系统</h1>
+            <p>1.输入需要识别的物品(英文）</p>
+            <div class="layui-input-group">
+              <div class="layui-input-split layui-input-prefix">
+                物品名
+              </div>
+              <input type="text" placeholder="请输入英文" class="layui-input" id="prompt">
+            </div>
+            <br>
+            <p>2.请上传一张它的照片，这样我们能够更好地将其识别出来</p>
+            <div class="layui-upload-drag" style="display: block;" id="ID-upload-demo-drag">
+              <i class="layui-icon layui-icon-upload"></i> 
+              <div>点击上传，或将文件拖拽到此处</div>
+              <div class="layui-hide" id="ID-upload-demo-preview">
+                <hr> <img src="https://vss-api.lizidaren.cn/init/get_img" alt="图片已上传" style="max-width: 100%">
+              </div>
+            </div>
+            <hr class="ws-space-16">
+            <button type="button" class="layui-btn" onclick="submit_init();">提交</button>
+        </div>
+    </center></body>
+    
+</html>
